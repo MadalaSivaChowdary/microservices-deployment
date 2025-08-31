@@ -12,21 +12,6 @@ services:
     networks:
       - mynetwork
 
-  product-ui:
-    build:
-      context: ./product_management        # directory where your Dockerfile is located
-      dockerfile: Dockerfile
-    container_name: product-ui
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./product_management:/product_management        # live sync source code
-      - /product_management/node_modules  # avoid overwriting node_modules
-    command: ["npm", "run", "dev", "--", "--host"]
-    restart: unless-stopped
-    networks:
-      - mynetwork
-
   eureka-server:
     build:
       context: ./eureka-server
@@ -137,3 +122,4 @@ services:
 networks:
   mynetwork:
     driver: bridge
+
