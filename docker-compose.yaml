@@ -14,14 +14,14 @@ services:
 
   product-ui:
     build:
-      context: .        # directory where your Dockerfile is located
+      context: ../ProductMangementUI/product_management   # path from deployment folder
       dockerfile: Dockerfile
     container_name: product-ui
     ports:
-      - "5173:5173"     # host:container
+      - "5173:5173"
     volumes:
-      - .:/product_management        # live sync source code
-      - /product_management/node_modules  # avoid overwriting node_modules
+      - ../ProductMangementUI/product_management:/product_management
+      - /product_management/node_modules
     command: ["npm", "run", "dev", "--", "--host"]
     restart: unless-stopped
 
@@ -109,29 +109,4 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/microdb?allowPublicKeyRetrieval=true&useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-
-  payment-service:
-    build:
-      context: ./payment-service
-    image: payment-service:1.0
-    container_name: payment-service
-    ports:
-      - "8084:8084"
-    depends_on:
-      - mysql
-      - eureka-server
-    networks:
-      - mynetwork
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/microdb?allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
-
-networks:
-  mynetwork:
-    driver: bridge
+      - SPRING_JPA_HIBERN
