@@ -20,8 +20,8 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./product_management:/product_management        # live sync source code
-      - /product_management/node_modules  # avoid overwriting node_modules
+      - ./product_management:/product_management
+      - /product_management/node_modules:/product_management/node_modules
     command: ["npm", "run", "dev", "--", "--host"]
     restart: unless-stopped
     networks:
@@ -137,4 +137,5 @@ services:
 networks:
   mynetwork:
     driver: bridge
+
 
